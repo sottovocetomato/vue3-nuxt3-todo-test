@@ -18,6 +18,7 @@
 <script setup>
 import BaseButton from "../Form/BaseButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
+import { storeNote } from "../../helpers/store.js";
 
 const todoModel = { id: null, text: "" };
 
@@ -30,23 +31,12 @@ function addTodo() {
 
 function saveNote() {
   todos.value = todos.value.filter((todo) => !!todo.text);
-  const savedNotes = JSON.parse(localStorage.getItem("notes" || null));
   const currentNote = {
     id: null,
     todos: [...todos.value],
     title: noteHeader.value,
   };
-  if (!savedNotes) {
-    currentNote.id = 1;
-    console.log(currentNote);
-    localStorage.setItem("todos", JSON.stringify([currentNote]));
-  } else {
-    currentNote.id = savedNotes.length++;
-    localStorage.setItem(
-      "todos",
-      JSON.stringify([...savedNotes, ...currentNote])
-    );
-  }
+  storeNote(currentNote);
 }
 </script>
 

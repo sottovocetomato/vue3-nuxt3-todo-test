@@ -7,8 +7,12 @@ $font-sm: 1.6rem;
 $font-xs: 1rem;
 
 //colors, borders
+$danger: #ff0000d5;
+
 $input-border: 1px solid #5576a6;
 $input-border-focus: 2px solid #4e84d3;
+
+$note-controls-border: 2px solid #d0d0d041;
 
 //background
 $bg-note: #f6be63;
@@ -22,12 +26,17 @@ $bg-btn-danger-hover: #ef5454;
 $bg-btn-warning: #fdbb25;
 $bg-btn-warning-hover: #f3b833;
 
+$bg-note-contols: #a6a6a670;
+$bg-note-contols-hover: rgba(166, 166, 166, 0.45);
+
 //spacings
 $spacer: 15px;
 
 //sizes
 $note-w-lg: 250px;
 $note-h-lg: 300px;
+$checkbox-width: 20px;
+$checkbox-height: 20px;
 
 //shadows
 $basic-shadow: 5px 5px 10px #bbbaba;
