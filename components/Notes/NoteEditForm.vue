@@ -1,9 +1,10 @@
 <template>
   <form class="notes-form" @submit.prevent v-if="todos?.length">
-    <BaseInput type="text" label="Заголовок" v-model="noteHeader"></BaseInput>
-    <div class="todos-list">
-      <h2>Список задач</h2>
+    <h2>Заголовок</h2>
+    <BaseInput type="text" v-model="noteHeader"></BaseInput>
 
+    <h2>Список задач</h2>
+    <div class="todos-list">
       <TodoComponent
         v-for="(todo, ind) in todos"
         :key="todo.id"
@@ -11,16 +12,36 @@
         @edit="onEdit"
       />
     </div>
-    <BaseButton @click="addTodo">Добавить задачу</BaseButton>
-    <BaseButton @click="saveNote">Сохранить изменения</BaseButton>
-    <BaseButton @click="onUndo" :disabled="!undoBuffer.length"
-      >Отменить внесенное изменение</BaseButton
-    >
-    <BaseButton @click="onRedo" :disabled="!redoBuffer.length"
-      >Повторить отмененное изменение</BaseButton
-    >
-    <BaseButton @click="onCancel">Отменить редактирование</BaseButton>
-    <BaseButton @click="saveNote">Удалить заметку</BaseButton>
+    <div class="notes-form__controls">
+      <BaseButton @click="addTodo" title="Добавить поле">
+        <IconsAdd />
+      </BaseButton>
+
+      <BaseButton
+        @click="onUndo"
+        :disabled="!undoBuffer.length"
+        title="Отменить действие"
+      >
+        <IconsUndo />
+      </BaseButton>
+      <BaseButton
+        @click="onRedo"
+        :disabled="!redoBuffer.length"
+        title="Повторить отмененное действие"
+      >
+        <IconsRedo />
+      </BaseButton>
+      <BaseButton @click="saveNote" title="Сохранить изменения">
+        <IconsSave />
+      </BaseButton>
+      <BaseButton
+        variant="danger"
+        @click="onCancel"
+        title="Отмена редактирования"
+      >
+        <IconsCancel />
+      </BaseButton>
+    </div>
   </form>
 </template>
 
@@ -74,6 +95,10 @@ function onRedo() {
 }
 
 function addTodo() {
+  if (todos.value.length > 10) {
+    alert("Вы добавили максимальное количество задач!");
+    return;
+  }
   todos.value.push({ ...todoModel, id: todos.value?.length + 1 });
 }
 function onCancel() {

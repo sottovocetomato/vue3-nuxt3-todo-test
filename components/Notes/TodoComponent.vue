@@ -9,13 +9,13 @@
     </div>
 
     <div class="todo__controls">
-      <BaseButton size="sm" v-if="!editing" @click="toggleEdit"
-        >Редактировать
+      <BaseButton v-if="!editing" @click="toggleEdit"
+        ><IconsEdit />
       </BaseButton>
-      <BaseButton size="sm" v-else @click="onEditEnd">Сохранить</BaseButton>
-      <BaseButton size="sm" variant="danger" @click="deleteTodo"
-        >Удалить</BaseButton
-      >
+      <BaseButton v-else @click="onEditEnd"><IconsSave /></BaseButton>
+      <BaseButton variant="danger" @click="deleteTodo"
+        ><IconsDelete
+      /></BaseButton>
     </div>
   </div>
 </template>
