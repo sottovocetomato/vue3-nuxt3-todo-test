@@ -11,6 +11,7 @@ function storeNote(note) {
 
 function getNoteById(id) {
   const savedNotes = JSON.parse(localStorage.getItem("notes" || null));
+
   if (savedNotes) {
     return savedNotes.find((note) => note.id == id);
   }

@@ -4,10 +4,10 @@
     <div class="todos-list">
       <h2>Список задач</h2>
       <BaseInput
-        v-for="(todo, ind) in todos"
+        v-for="todo in todos"
         :key="todo.id"
         type="text"
-        v-model="todos[ind].text"
+        v-model="todo.text"
       ></BaseInput>
     </div>
     <BaseButton text="Добавить задачу" @click="addTodo" />
@@ -19,8 +19,6 @@
 import BaseButton from "../Form/BaseButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import { storeNote } from "../../helpers/store.js";
-
-const todoModel = { id: null, text: "" };
 
 const noteHeader = ref("");
 const todos = ref([{ ...todoModel, id: 1 }]);

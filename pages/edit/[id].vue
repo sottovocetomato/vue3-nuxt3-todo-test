@@ -1,15 +1,16 @@
 <template>
   <div class="container">
-    <NoteForm />
+    <NoteEditForm />
   </div>
 </template>
 
 <script>
 import BaseInput from "../../components/Form/BaseInput.vue";
-import NoteForm from "../../components/Notes/NoteForm.vue";
+import NoteForm from "../../components/Notes/NoteCreateForm.vue";
+import NoteEditForm from "../../components/Notes/NoteEditForm.vue";
 export default {
   name: "[id]",
-  components: { NoteForm, BaseInput },
+  components: { NoteEditForm },
 };
 </script>
 
