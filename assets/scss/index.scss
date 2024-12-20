@@ -10,11 +10,14 @@ body {
 
 .container {
   padding: 20px;
-  width: 1450px;
+  width: vars.$container-xl;
   margin: auto;
   border: 1px;
 }
-
+.notes-form {
+  width: calc(vars.$container-xl / 1.5);
+  margin: auto;
+}
 .notes-grid {
   width: 100%;
   height: 100%;
@@ -155,6 +158,7 @@ body {
   color: white;
   margin-bottom: vars.$spacer;
   font-size: vars.$font-md;
+  padding: 0 vars.$spacer;
   &:hover {
     cursor: pointer;
     background-color: vars.$bg-btn-hover;
@@ -183,5 +187,31 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+}
+
+.todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(vars.$spacer/2);
+  background-color: rgba(78, 132, 211, 0.64);
+  &__text {
+    width: 65%;
+    margin-right: vars.$spacer;
+    span {
+      font-size: vars.$font-md;
+    }
+  }
+  &__controls {
+    width: 45%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    button {
+      width: 49%;
+      margin-bottom: 0px;
+    }
   }
 }

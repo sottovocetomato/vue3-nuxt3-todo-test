@@ -3,7 +3,7 @@
     :class="['btn', variant ? `btn-${variant}` : '', customClass]"
     :disabled="disabled"
   >
-    {{ text }}
+    <slot></slot>
   </button>
 </template>
 

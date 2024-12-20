@@ -4,17 +4,10 @@
     <div class="todos-list">
       <h2>Список задач</h2>
 
-      <div
-        class="todo-list__todo-edit"
-        v-for="(todo, ind) in todos"
-        :key="todo.id"
-      >
-        <BaseCheckbox v-model="todo.done" />
-        <BaseInput type="text" v-model="todos.text" disabled></BaseInput>
-      </div>
+      <TodoComponent v-for="(todo, ind) in todos" :key="todo.id" :todo="todo" />
     </div>
-    <BaseButton text="Добавить задачу" @click="addTodo" />
-    <BaseButton text="Сохранить заметку" @click="saveNote" />
+    <BaseButton @click="addTodo">Добавить задачу</BaseButton>
+    <BaseButton @click="saveNote">Сохранить заметку</BaseButton>
   </form>
 </template>
 
@@ -24,6 +17,7 @@ import BaseInput from "../Form/BaseInput.vue";
 import { getNoteById, storeNote } from "../../helpers/store.js";
 import { todoModel } from "../../helpers/models.js";
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
+import TodoComponent from "./TodoComponent.vue";
 
 const route = useRoute();
 
