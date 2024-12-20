@@ -4,10 +4,23 @@
     <div class="todos-list">
       <h2>Список задач</h2>
 
-      <TodoComponent v-for="(todo, ind) in todos" :key="todo.id" :todo="todo" />
+      <TodoComponent
+        v-for="(todo, ind) in todos"
+        :key="todo.id"
+        :todo="todo"
+        @edit="onEdit"
+      />
     </div>
     <BaseButton @click="addTodo">Добавить задачу</BaseButton>
-    <BaseButton @click="saveNote">Сохранить заметку</BaseButton>
+    <BaseButton @click="saveNote">Сохранить изменения</BaseButton>
+    <BaseButton @click="onUndo" :disabled="!undoBuffer.length"
+      >Отменить внесенное изменение</BaseButton
+    >
+    <BaseButton @click="onRedo" :disabled="!redoBuffer.length"
+      >Повторить отмененное изменение</BaseButton
+    >
+    <BaseButton @click="onCancel">Отменить редактирование</BaseButton>
+    <BaseButton @click="saveNote">Удалить заметку</BaseButton>
   </form>
 </template>
 
@@ -20,6 +33,7 @@ import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import TodoComponent from "./TodoComponent.vue";
 
 const route = useRoute();
+const router = useRouter();
 
 const id = computed(() => route?.params?.id);
 
@@ -28,17 +42,46 @@ const note = ref(null);
 const noteHeader = ref("");
 const todos = ref([]);
 
+const undoBuffer = ref([]);
+const redoBuffer = ref([]);
+
 onMounted(() => {
   note.value = getNoteById(id.value);
   noteHeader.value = note.value.title;
   todos.value = note.value.todos;
-  console.log(note.value);
-  console.log(id.value);
-  console.log(todos.value);
 });
+
+function onEdit(id, data) {
+  console.log(data, id, "editing");
+  redoBuffer.value.push({ id, ...data });
+
+  let todoIndex = todos.value.findIndex((el) => el.id === id);
+  undoBuffer.value.push({ ...todos.value[todoIndex] });
+  todos.value[todoIndex] = { ...todos.value[todoIndex], ...data };
+  console.log(undoBuffer.value, "undoBuffer");
+}
+
+function onUndo() {
+  const todoToUndo = undoBuffer.value.pop();
+  let todoIndex = todos.value.findIndex((el) => el.id === todoToUndo.id);
+  todos.value[todoIndex] = todoToUndo;
+}
+function onRedo() {
+  const todoToRedo = redoBuffer.value.pop();
+  let todoIndex = todos.value.findIndex((el) => el.id === todoToRedo.id);
+  todos.value[todoIndex] = todoToRedo;
+}
 
 function addTodo() {
   todos.value.push({ ...todoModel, id: todos.value?.length + 1 });
+}
+function onCancel() {
+  const userConfirm = confirm(
+    "Отменить редактирование и вернуться на предыдущий экран?"
+  );
+  if (userConfirm) {
+    router.push("/");
+  }
 }
 
 function saveNote() {

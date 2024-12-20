@@ -30,10 +30,10 @@ const { entity = {} } = defineProps({
 const preTodos = computed(() => entity?.todos?.slice(0, 4));
 
 function deleteNote() {
-  const confrim = confirm(
+  const userConfirm = confirm(
     `Вы уверены, что хотите удалить заметку: ${entity.title}`
   );
-  if (confrim) {
+  if (userConfirm) {
     deleteNoteById(entity.id);
   }
 }

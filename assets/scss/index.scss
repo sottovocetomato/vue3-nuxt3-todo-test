@@ -137,7 +137,7 @@ body {
 
 .base-input {
   width: 100%;
-  height: 55px;
+  height: vars.$form-elements-height;
 }
 .checkbox-wrap {
   width: vars.$checkbox-width;
@@ -150,7 +150,7 @@ body {
 }
 .btn {
   width: 100%;
-  height: 55px;
+  height: vars.$form-elements-height;
   background-color: vars.$bg-btn;
   outline: none;
   border: none;
@@ -159,6 +159,10 @@ body {
   margin-bottom: vars.$spacer;
   font-size: vars.$font-md;
   padding: 0 vars.$spacer;
+  &:disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
   &:hover {
     cursor: pointer;
     background-color: vars.$bg-btn-hover;
@@ -175,10 +179,13 @@ body {
       background-color: vars.$bg-btn-warning-hover;
     }
   }
+  &-sm {
+    height: calc(vars.$form-elements-height/1.4);
+  }
 }
 
 .todos-list {
-  margin-top: vars.$spacer;
+  margin: vars.$spacer 0;
   h2 {
     text-align: center;
     margin-bottom: vars.$spacer;
@@ -192,20 +199,35 @@ body {
 
 .todo {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: calc(vars.$spacer/2);
   background-color: rgba(78, 132, 211, 0.64);
+  padding: calc(vars.$spacer/2);
+
+  &__body {
+    width: 100%;
+    margin-bottom: calc(vars.$spacer/2);
+    padding: calc(vars.$spacer/2) 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #d9d9d9;
+  }
   &__text {
-    width: 65%;
-    margin-right: vars.$spacer;
+    margin-left: vars.$spacer;
+    width: 100%;
+    input {
+      margin-bottom: 0;
+    }
     span {
       font-size: vars.$font-md;
     }
   }
   &__controls {
-    width: 45%;
+    margin-top: calc(vars.$spacer/2);
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
