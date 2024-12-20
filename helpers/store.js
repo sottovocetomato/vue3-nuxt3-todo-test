@@ -5,7 +5,7 @@ function storeNote(note) {
     localStorage.setItem("notes", JSON.stringify([note]));
   } else {
     note.id = savedNotes.length++;
-    localStorage.setItem("notes", JSON.stringify([...savedNotes, ...note]));
+    localStorage.setItem("notes", JSON.stringify([...savedNotes, note]));
   }
 }
 

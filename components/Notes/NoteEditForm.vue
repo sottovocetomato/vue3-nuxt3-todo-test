@@ -53,17 +53,18 @@ onMounted(() => {
 
 function onEdit(id, data) {
   console.log(data, id, "editing");
-  redoBuffer.value.push({ id, ...data });
-
+  // addToRedoBuffer(id, data);
   let todoIndex = todos.value.findIndex((el) => el.id === id);
-  undoBuffer.value.push({ ...todos.value[todoIndex] });
+  addToUndoBuffer(todoIndex);
   todos.value[todoIndex] = { ...todos.value[todoIndex], ...data };
   console.log(undoBuffer.value, "undoBuffer");
 }
 
 function onUndo() {
   const todoToUndo = undoBuffer.value.pop();
+  console.log(todoToUndo, "todoToUndo");
   let todoIndex = todos.value.findIndex((el) => el.id === todoToUndo.id);
+  addToRedoBuffer(id, todos.value[todoIndex]);
   todos.value[todoIndex] = todoToUndo;
 }
 function onRedo() {
@@ -81,6 +82,22 @@ function onCancel() {
   );
   if (userConfirm) {
     router.push("/");
+  }
+}
+function addToRedoBuffer(id, data) {
+  if (redoBuffer.value.length < 5) {
+    redoBuffer.value.push({ id, ...data });
+  } else {
+    redoBuffer.value.shift();
+    redoBuffer.value.push({ id, ...data });
+  }
+}
+function addToUndoBuffer(todoIndex) {
+  if (undoBuffer.value.length < 5) {
+    undoBuffer.value.push({ ...todos.value[todoIndex] });
+  } else {
+    undoBuffer.value.shift();
+    undoBuffer.value.push({ ...todos.value[todoIndex] });
   }
 }
 

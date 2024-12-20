@@ -19,6 +19,7 @@
 import BaseButton from "../Form/BaseButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import { storeNote } from "../../helpers/store.js";
+import { todoModel } from "../../helpers/models.js";
 
 const noteHeader = ref("");
 const todos = ref([{ ...todoModel, id: 1 }]);

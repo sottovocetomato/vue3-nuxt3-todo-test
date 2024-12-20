@@ -1,7 +1,7 @@
 <template>
   <div class="todo">
     <div class="todo__body">
-      <BaseCheckbox v-model="todoDone" @change="onTodoCheck" />
+      <BaseCheckbox v-model="todoDone" />
       <div class="todo__text">
         <BaseInput v-if="editing" type="text" v-model="todoText"></BaseInput>
         <span v-else>{{ todoText }}</span>
@@ -48,7 +48,7 @@ const todoDone = computed({
     return todo.done;
   },
   set(newValue) {
-    emit("edit", todo.id, newValue);
+    emit("edit", todo.id, { text: todo.text, done: newValue });
   },
 });
 
@@ -57,7 +57,13 @@ function toggleEdit() {
 }
 
 function onEditEnd() {
-  emit("edit", todo.id, { text: todoTextVal.value, done: todo.done });
+  if (todoTextVal.value) {
+    emit("edit", todo.id, {
+      text: todoTextVal.value,
+      done: todo.done,
+    });
+  }
+
   toggleEdit();
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="notes-grid">
-      <div class="note note-add"></div>
+      <nuxt-link class="note note-add" to="/create"></nuxt-link>
       <NoteComponent v-for="note in notes" :entity="note" :key="note.id" />
       <div class="note"></div>
     </div>
