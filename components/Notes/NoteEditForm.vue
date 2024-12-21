@@ -7,7 +7,7 @@
     <div class="todos-list">
       <TodoComponent
         v-for="(todo, ind) in todos"
-        :key="todo.id"
+        :key="`${todo.id}-${ind}`"
         :todo="todo"
         @edit="onEdit"
         @delete="onDelete"
@@ -74,7 +74,6 @@ onMounted(() => {
 });
 
 function onEdit(id, data) {
-  console.log(data, id, "editing");
   // addToRedoBuffer(id, data);
   addToUndoBuffer(id);
   const todoIndex = todos.value?.findIndex((todo) => todo?.id === id);
@@ -100,6 +99,7 @@ function onUndo() {
     todos.value.splice(todoIndex, 0, todoToUndo);
     return;
   }
+
   if (todoMeta?.new) {
     addToRedoBuffer(id, {
       data: todoToUndo,
@@ -119,7 +119,7 @@ function onRedo() {
   const redoData = redoBuffer.value.pop();
   const todoToRedo = redoData?.data;
   const todoMeta = redoData?.meta;
-  console.log(todoToRedo, "todoToRedo");
+
   let todoIndex = todos.value?.findIndex((todo) => todo?.id === todoToRedo?.id);
 
   if (todoIndex === -1) {
@@ -129,6 +129,7 @@ function onRedo() {
   addToUndoBuffer(todoIndex, todoMeta);
   if (todoMeta?.delete) {
     todos.value.splice(todoIndex, 1);
+
     return;
   }
   if (todoMeta?.new) {
@@ -145,8 +146,8 @@ function addTodo() {
     return;
   }
   const todoIndex = todos.value?.length;
-  addToUndoBuffer(todoIndex, { new: true });
   todos.value.push({ ...todoModel, id: todoIndex });
+  addToUndoBuffer(todoIndex, { new: true });
 }
 
 function onDelete(id) {
@@ -181,8 +182,6 @@ function removeFromRedoBuffer(id) {
   redoBuffer.value = redoBuffer.value.filter((b) => b.data.id !== id);
 }
 function addToUndoBuffer(todoIndex, meta = {}) {
-  console.log(todoIndex, "todoIndex");
-  console.log(todos.value, "todos.value[todoIndex]");
   if (undoBuffer.value.length >= 5) {
     undoBuffer.value.shift();
   }
@@ -190,7 +189,6 @@ function addToUndoBuffer(todoIndex, meta = {}) {
     data: { ...todos.value[todoIndex] },
     meta,
   });
-  console.log(undoBuffer.value);
 }
 
 function saveNote() {
