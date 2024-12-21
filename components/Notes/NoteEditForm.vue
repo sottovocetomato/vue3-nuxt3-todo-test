@@ -83,16 +83,20 @@ function onEdit(id, data) {
 }
 
 function onUndo() {
-  console.log(undoBuffer.value);
   const undoData = undoBuffer.value.pop();
   const todoToUndo = undoData?.data;
   const todoMeta = undoData?.meta;
-  const todoIndex =
-    todos.value?.findIndex((todo) => todo?.id === todoToUndo?.id) ??
-    todoToUndo?.id;
+  let todoIndex = todos.value?.findIndex((todo) => todo?.id === todoToUndo?.id);
+
+  if (todoIndex === -1) {
+    todoIndex = todoToUndo?.id;
+  }
 
   if (todoMeta?.delete) {
-    addToRedoBuffer(id, todoToUndo);
+    addToRedoBuffer(id, {
+      data: todoToUndo,
+      meta: todoMeta,
+    });
     todos.value.splice(todoIndex, 0, todoToUndo);
     return;
   }
@@ -116,11 +120,13 @@ function onRedo() {
   const todoToRedo = redoData?.data;
   const todoMeta = redoData?.meta;
   console.log(todoToRedo, "todoToRedo");
-  const todoIndex =
-    todos.value?.findIndex((todo) => todo?.id === todoToRedo?.id) ??
-    todoToRedo?.id;
+  let todoIndex = todos.value?.findIndex((todo) => todo?.id === todoToRedo?.id);
 
-  addToUndoBuffer(todoIndex);
+  if (todoIndex === -1) {
+    todoIndex = todoToRedo?.id;
+  }
+
+  addToUndoBuffer(todoIndex, todoMeta);
   if (todoMeta?.delete) {
     todos.value.splice(todoIndex, 1);
     return;
@@ -144,6 +150,7 @@ function addTodo() {
 }
 
 function onDelete(id) {
+  console.log(todos.value);
   addToUndoBuffer(id, { delete: true });
   todos.value = todos.value.filter((el) => el.id !== id);
   removeFromRedoBuffer(id);
@@ -168,12 +175,14 @@ function addToRedoBuffer(id, { data = {}, meta = {} }) {
     },
     meta,
   });
+  console.log(redoBuffer.value, "redoBuffer.value");
 }
 function removeFromRedoBuffer(id) {
   redoBuffer.value = redoBuffer.value.filter((b) => b.data.id !== id);
 }
 function addToUndoBuffer(todoIndex, meta = {}) {
   console.log(todoIndex, "todoIndex");
+  console.log(todos.value, "todos.value[todoIndex]");
   if (undoBuffer.value.length >= 5) {
     undoBuffer.value.shift();
   }
