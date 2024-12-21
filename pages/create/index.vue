@@ -1,4 +1,6 @@
-<template><NotesNoteCreateForm /></template>
+<template>
+  <div class="container"><NotesNoteCreateForm /></div>
+</template>
 
 <script setup></script>
 

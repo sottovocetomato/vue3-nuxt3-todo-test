@@ -28,7 +28,7 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 48%;
+      width: 30%;
     }
   }
   &-edit {
@@ -359,6 +359,15 @@ body {
       button {
         width: 48%;
         height: 32px;
+      }
+    }
+  }
+  .notes-form:not(.notes-form-edit) {
+    .todo {
+      &__controls {
+        button {
+          width: 100%;
+        }
       }
     }
   }

@@ -23,6 +23,13 @@
       <BaseButton @click="saveNote" title="Сохранить изменения">
         <IconsSave
       /></BaseButton>
+      <BaseButton
+        variant="danger"
+        @click="onCancel"
+        title="Отмена создания заметки?"
+      >
+        <IconsCancel />
+      </BaseButton>
     </div>
   </form>
 </template>
@@ -48,6 +55,11 @@ function onEdit(id, val) {
 function deleteTodo(id) {
   if (todos.value.length === 1) return;
   todos.value = todos.value.filter((el) => el.id !== id);
+}
+function onCancel() {
+  const userConfirm = confirm("Отменить создание заявки?");
+  if (!userConfirm) return;
+  router.push("/");
 }
 
 function saveNote() {
