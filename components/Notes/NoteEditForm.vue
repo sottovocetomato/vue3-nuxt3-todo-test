@@ -10,6 +10,7 @@
         :key="todo.id"
         :todo="todo"
         @edit="onEdit"
+        @delete="onDelete"
       />
     </div>
     <div class="notes-form__controls">
@@ -75,22 +76,49 @@ onMounted(() => {
 function onEdit(id, data) {
   console.log(data, id, "editing");
   // addToRedoBuffer(id, data);
-  let todoIndex = todos.value.findIndex((el) => el.id === id);
-  addToUndoBuffer(todoIndex);
-  todos.value[todoIndex] = { ...todos.value[todoIndex], ...data };
+  addToUndoBuffer(id);
+  todos.value[id] = { ...todos.value[id], ...data };
   console.log(undoBuffer.value, "undoBuffer");
 }
 
 function onUndo() {
-  const todoToUndo = undoBuffer.value.pop();
-  console.log(todoToUndo, "todoToUndo");
-  let todoIndex = todos.value.findIndex((el) => el.id === todoToUndo.id);
-  addToRedoBuffer(id, todos.value[todoIndex]);
+  const undoData = undoBuffer.value.pop();
+  const todoToUndo = undoData?.data;
+  const snapshotLength = undoData?.length;
+  const currentLength = todos.value?.length;
+  const todoIndex = todoToUndo?.id;
+
+  if (snapshotLength > currentLength) {
+    addToRedoBuffer(id, todoToUndo);
+    todos.value.splice(todoIndex, 0, todoToUndo);
+    return;
+  }
+  if (snapshotLength < currentLength) {
+    addToRedoBuffer(id, todoToUndo);
+    todos.value.pop();
+    return;
+  }
+  addToRedoBuffer(id, {
+    ...todos.value[todoIndex],
+  });
   todos.value[todoIndex] = todoToUndo;
 }
+
 function onRedo() {
-  const todoToRedo = redoBuffer.value.pop();
-  let todoIndex = todos.value.findIndex((el) => el.id === todoToRedo.id);
+  const redoData = redoBuffer.value.pop();
+  const todoToRedo = redoData?.data;
+  const snapshotLength = redoData?.length;
+  const currentLength = todos.value?.length;
+  const todoIndex = todoToRedo?.id;
+  console.log(todoToRedo, "todoToRedo");
+  if (snapshotLength < currentLength) {
+    todos.value.splice(todoIndex, 1);
+    return;
+  }
+  if (snapshotLength > currentLength) {
+    todos.value.push(todoToRedo);
+    return;
+  }
   todos.value[todoIndex] = todoToRedo;
 }
 
@@ -99,8 +127,16 @@ function addTodo() {
     alert("Вы добавили максимальное количество задач!");
     return;
   }
-  todos.value.push({ ...todoModel, id: todos.value?.length + 1 });
+  const todoIndex = todos.value?.length;
+  addToUndoBuffer(todoIndex);
+  todos.value.push({ ...todoModel, id: todoIndex });
 }
+
+function onDelete(id) {
+  addToUndoBuffer(id);
+  todos.value = todos.value.filter((el) => el.id !== id);
+}
+
 function onCancel() {
   const userConfirm = confirm(
     "Отменить редактирование и вернуться на предыдущий экран?"
@@ -110,20 +146,27 @@ function onCancel() {
   }
 }
 function addToRedoBuffer(id, data) {
-  if (redoBuffer.value.length < 5) {
-    redoBuffer.value.push({ id, ...data });
-  } else {
+  const length = todos.value.length;
+  if (redoBuffer.value.length >= 5) {
     redoBuffer.value.shift();
-    redoBuffer.value.push({ id, ...data });
   }
+  redoBuffer.value.push({
+    data: {
+      id,
+      ...data,
+    },
+    length,
+  });
 }
 function addToUndoBuffer(todoIndex) {
-  if (undoBuffer.value.length < 5) {
-    undoBuffer.value.push({ ...todos.value[todoIndex] });
-  } else {
+  const length = todos.value.length;
+  if (undoBuffer.value.length >= 5) {
     undoBuffer.value.shift();
-    undoBuffer.value.push({ ...todos.value[todoIndex] });
   }
+  undoBuffer.value.push({
+    data: { ...todos.value[todoIndex] },
+    length,
+  });
 }
 
 function saveNote() {

@@ -22,10 +22,10 @@ import { storeNote } from "../../helpers/store.js";
 import { todoModel } from "../../helpers/models.js";
 
 const noteHeader = ref("");
-const todos = ref([{ ...todoModel, id: 1 }]);
+const todos = ref([{ ...todoModel, id: 0 }]);
 
 function addTodo() {
-  todos.value.push({ ...todoModel, id: todos.value?.length + 1 });
+  todos.value.push({ ...todoModel, id: todos.value?.length });
 }
 
 function saveNote() {

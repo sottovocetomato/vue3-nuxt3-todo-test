@@ -1,3 +1,7 @@
-const todoModel = { id: null, text: "", done: null };
+const todoModel = {
+  id: null,
+  text: "",
+  done: null,
+};
 
 export { todoModel };

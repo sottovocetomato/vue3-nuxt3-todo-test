@@ -68,7 +68,7 @@ function onEditEnd() {
 }
 
 function deleteTodo() {
-  emit("delete");
+  emit("delete", todo.id);
 }
 </script>
 
