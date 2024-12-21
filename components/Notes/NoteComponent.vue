@@ -2,7 +2,7 @@
   <div class="note">
     <h3>{{ entity?.title }}</h3>
     <div v-for="todo in preTodos" class="note__todo">
-      <BaseCheckbox disabled /><span>{{ todo.text }}</span>
+      <BaseCheckbox disabled :checked="todo.done" /><span>{{ todo.text }}</span>
     </div>
     <a class="note__controls">
       <div
@@ -22,7 +22,7 @@
 <script setup>
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import { deleteNoteById } from "../../helpers/store.js";
-
+const emit = defineEmits(["refetch"]);
 const { entity = {} } = defineProps({
   entity: Object,
 });
@@ -35,6 +35,7 @@ function deleteNote() {
   );
   if (userConfirm) {
     deleteNoteById(entity.id);
+    emit("refetch");
   }
 }
 </script>

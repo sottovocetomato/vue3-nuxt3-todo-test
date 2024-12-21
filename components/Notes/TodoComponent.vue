@@ -24,6 +24,7 @@
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseButton from "../Form/BaseButton.vue";
+import { deleteNoteById } from "../../helpers/store.js";
 
 const emit = defineEmits(["edit", "delete"]);
 
@@ -68,7 +69,10 @@ function onEditEnd() {
 }
 
 function deleteTodo() {
-  emit("delete", todo.id);
+  const userConfirm = confirm(`Вы уверены, что хотите удалить задачу?`);
+  if (userConfirm) {
+    emit("delete", todo.id);
+  }
 }
 </script>
 

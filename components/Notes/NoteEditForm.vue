@@ -49,7 +49,7 @@
 <script setup>
 import BaseButton from "../Form/BaseButton.vue";
 import BaseInput from "../Form/BaseInput.vue";
-import { getNoteById, storeNote } from "../../helpers/store.js";
+import { getNoteById, storeNote, updateNote } from "../../helpers/store.js";
 import { todoModel } from "../../helpers/models.js";
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import TodoComponent from "./TodoComponent.vue";
@@ -193,12 +193,11 @@ function addToUndoBuffer(todoIndex, meta = {}) {
 
 function saveNote() {
   todos.value = todos.value.filter((todo) => !!todo.text);
-  const currentNote = {
-    id: null,
+  const dataToStore = {
     todos: [...todos.value],
     title: noteHeader.value,
   };
-  storeNote(currentNote);
+  updateNote(id.value, dataToStore);
 }
 </script>
 

@@ -10,8 +10,8 @@
         v-model="todo.text"
       ></BaseInput>
     </div>
-    <BaseButton text="Добавить задачу" @click="addTodo" />
-    <BaseButton text="Сохранить заметку" @click="saveNote" />
+    <BaseButton @click="addTodo">Добавить задачу</BaseButton>
+    <BaseButton @click="saveNote">Сохранить заметку</BaseButton>
   </form>
 </template>
 
