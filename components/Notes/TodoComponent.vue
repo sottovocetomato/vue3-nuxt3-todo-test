@@ -1,18 +1,26 @@
 <template>
   <div class="todo">
     <div class="todo__body">
-      <BaseCheckbox v-model="todoDone" />
+      <BaseCheckbox v-model="todoDone" v-if="!createMode" />
       <div class="todo__text">
-        <BaseInput v-if="editing" type="text" v-model="todoText"></BaseInput>
+        <BaseInput
+          v-if="createMode || editing"
+          type="text"
+          v-model="todoText"
+        ></BaseInput>
         <span v-else>{{ todoText }}</span>
       </div>
     </div>
 
     <div class="todo__controls">
-      <BaseButton v-if="!editing" @click="toggleEdit"
-        ><IconsEdit />
-      </BaseButton>
-      <BaseButton v-else @click="onEditEnd"><IconsSave /></BaseButton>
+      <template v-if="!createMode">
+        <BaseButton v-if="!editing" @click="toggleEdit">
+          <IconsEdit />
+        </BaseButton>
+        <BaseButton v-else @click="onEditEnd">
+          <IconsSave />
+        </BaseButton>
+      </template>
       <BaseButton variant="danger" @click="deleteTodo"
         ><IconsDelete
       /></BaseButton>
@@ -24,15 +32,15 @@
 import BaseCheckbox from "../Form/BaseCheckbox.vue";
 import BaseInput from "../Form/BaseInput.vue";
 import BaseButton from "../Form/BaseButton.vue";
-import { deleteNoteById } from "../../helpers/store.js";
 
 const emit = defineEmits(["edit", "delete"]);
 
-const { todo = {} } = defineProps({
+const { todo = {}, createMode = false } = defineProps({
   todo: Object,
+  createMode: Boolean,
 });
-
-const editing = ref(false);
+console.log(todo);
+const editing = ref(todo?.new);
 const todoTextVal = ref("");
 
 const todoText = computed({
@@ -40,7 +48,11 @@ const todoText = computed({
     return todo.text;
   },
   set(newValue) {
-    todoTextVal.value = newValue;
+    if (createMode) {
+      emit("edit", todo.id, newValue?.trim());
+      return;
+    }
+    todoTextVal.value = newValue?.trim();
   },
 });
 
@@ -69,10 +81,7 @@ function onEditEnd() {
 }
 
 function deleteTodo() {
-  const userConfirm = confirm(`Вы уверены, что хотите удалить задачу?`);
-  if (userConfirm) {
-    emit("delete", todo.id);
-  }
+  emit("delete", todo.id);
 }
 </script>
 

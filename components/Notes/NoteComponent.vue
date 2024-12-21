@@ -1,6 +1,6 @@
 <template>
   <div class="note">
-    <h3>{{ entity?.title }}</h3>
+    <h3 class="note-truncate">{{ entity?.title }}</h3>
     <div v-for="todo in preTodos" class="note__todo">
       <BaseCheckbox disabled :checked="todo.done" /><span>{{ todo.text }}</span>
     </div>

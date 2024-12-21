@@ -1,5 +1,5 @@
 <template>
-  <form class="notes-form" @submit.prevent v-if="todos?.length">
+  <form class="notes-form notes-form-edit" @submit.prevent v-if="todos?.length">
     <h2>Заголовок</h2>
     <BaseInput type="text" v-model="noteHeader"></BaseInput>
 
@@ -146,7 +146,7 @@ function addTodo() {
     return;
   }
   const todoIndex = todos.value?.length;
-  todos.value.push({ ...todoModel, id: todoIndex });
+  todos.value.push({ ...todoModel, id: todoIndex, new: true });
   addToUndoBuffer(todoIndex, { new: true });
 }
 
@@ -198,6 +198,7 @@ function saveNote() {
     title: noteHeader.value,
   };
   updateNote(id.value, dataToStore);
+  router.push("/");
 }
 </script>
 

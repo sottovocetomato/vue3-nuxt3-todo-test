@@ -26,7 +26,21 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 15%;
+      width: 48%;
+    }
+  }
+  &-edit {
+    .notes-form__controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+      }
     }
   }
 }
@@ -38,7 +52,12 @@ body {
   grid-template-columns: repeat(auto-fit, vars.$note-w-lg);
   gap: vars.$spacer * 2;
 }
-
+.note-truncate {
+  width: calc(vars.$note-w-lg - vars.$spacer * 2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .note {
   width: vars.$note-w-lg;
   height: vars.$note-h-lg;
@@ -50,6 +69,7 @@ body {
   text-align: center;
   padding: vars.$spacer;
   position: relative;
+  overflow: hidden;
   &:hover {
     cursor: pointer;
     background-color: vars.$bg-note-hover;
