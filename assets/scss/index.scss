@@ -299,3 +299,67 @@ body {
   border-radius: 20px;
   //border: 3px solid vars.$primary-light;
 }
+
+@media (max-width: 1366px) {
+  .container {
+    width: 1200px;
+  }
+}
+@media (max-width: 1024px) {
+  .container {
+    width: 820px;
+  }
+  .notes-form {
+    width: 100%;
+  }
+  .notes-grid {
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    width: 700px;
+  }
+}
+@media (max-width: 576px) {
+  .container {
+    width: 100%;
+    padding: calc(vars.$spacer/5);
+  }
+  .todos-list {
+    height: 100%;
+  }
+  .notes-form {
+    &__controls {
+      flex-direction: column;
+      .btn {
+        width: 100%;
+      }
+    }
+    &-edit {
+      .notes-form__controls {
+        flex-direction: column;
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .todo {
+    flex-direction: column;
+    &__body {
+      .todo__text {
+        width: 100%;
+      }
+    }
+    &__controls {
+      margin-top: vars.$spacer;
+      width: 100%;
+      button {
+        width: 48%;
+        height: 32px;
+      }
+    }
+  }
+}
