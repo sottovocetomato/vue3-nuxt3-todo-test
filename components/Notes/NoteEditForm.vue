@@ -1,7 +1,7 @@
 <template>
   <form class="notes-form notes-form-edit" @submit.prevent v-if="todos?.length">
     <h2>Заголовок</h2>
-    <BaseInput type="text" v-model="noteHeader"></BaseInput>
+    <BaseInput type="text" v-model.trim="noteHeader"></BaseInput>
 
     <h2>Список задач</h2>
     <div class="todos-list">

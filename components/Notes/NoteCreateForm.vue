@@ -1,6 +1,10 @@
 <template>
   <form class="notes-form" @submit.prevent>
-    <BaseInput type="text" label="Заголовок" v-model="noteHeader"></BaseInput>
+    <BaseInput
+      type="text"
+      label="Заголовок"
+      v-model.trim="noteHeader"
+    ></BaseInput>
     <div class="todos-list">
       <h2>Список задач</h2>
       <NotesTodoComponent
