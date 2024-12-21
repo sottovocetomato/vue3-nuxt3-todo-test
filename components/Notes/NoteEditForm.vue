@@ -32,7 +32,11 @@
       >
         <IconsRedo />
       </BaseButton>
-      <BaseButton @click="saveNote" title="Сохранить изменения">
+      <BaseButton
+        @click="saveNote"
+        variant="warning"
+        title="Сохранить изменения"
+      >
         <IconsSave />
       </BaseButton>
       <BaseButton

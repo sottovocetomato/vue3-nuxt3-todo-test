@@ -6,6 +6,8 @@
 body {
   font-family: "RobotoMono";
   font-size: vars.$font-sm;
+  background-color: #363073;
+  color: white;
 }
 
 .container {
@@ -72,7 +74,6 @@ body {
   overflow: hidden;
   &:hover {
     cursor: pointer;
-    background-color: vars.$bg-note-hover;
   }
   &-add {
     background-color: vars.$bg-note-add;
@@ -146,7 +147,7 @@ body {
 }
 .note:hover > .note__controls {
   height: calc(vars.$note-h-lg / 3);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .input-wrap {
   label {
@@ -211,6 +212,12 @@ body {
       background-color: vars.$bg-btn-warning-hover;
     }
   }
+  &-secondary {
+    background-color: vars.$bg-btn-secondary;
+    &:hover {
+      background-color: vars.$bg-btn-secondary-hover;
+    }
+  }
   &-sm {
     height: calc(vars.$form-elements-height/1.4);
   }
@@ -236,9 +243,11 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(78, 132, 211, 0.64);
+  //background-color: rgba(78, 132, 211, 0.64);
+  background-color: vars.$bg-note;
   padding: calc(vars.$spacer/2);
   margin-bottom: vars.$spacer;
+  border-radius: 5px;
 
   &__body {
     width: 100%;
@@ -274,4 +283,19 @@ body {
       align-items: center;
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d0d0d0;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: vars.$primary-light;
+  border-radius: 20px;
+  //border: 3px solid vars.$primary-light;
 }

@@ -14,10 +14,10 @@
 
     <div class="todo__controls">
       <template v-if="!createMode">
-        <BaseButton v-if="!editing" @click="toggleEdit">
+        <BaseButton v-if="!editing" variant="warning" @click="toggleEdit">
           <IconsEdit />
         </BaseButton>
-        <BaseButton v-else @click="onEditEnd">
+        <BaseButton v-else variant="warning" @click="onEditEnd">
           <IconsSave />
         </BaseButton>
       </template>

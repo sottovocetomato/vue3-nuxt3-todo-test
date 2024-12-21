@@ -7,7 +7,11 @@ $font-sm: 1.6rem;
 $font-xs: 1rem;
 
 //colors, borders
-$danger: #ff0000d5;
+$primary: #363073;
+$primary-light: #5047a9;
+$secondary: #1de9b6;
+$tertiary: #0e69d7;
+$danger: #ff5000;
 
 $input-border: 1px solid #5576a6;
 $input-border-focus: 2px solid #4e84d3;
@@ -15,19 +19,22 @@ $input-border-focus: 2px solid #4e84d3;
 $note-controls-border: 2px solid #d0d0d041;
 
 //background
-$bg-note: #f6be63;
-$bg-note-hover: #d5a350;
+$bg-body: #363073;
+$bg-note: #5955d9;
+$bg-note-hover: #5652d0;
 $bg-note-add: #bbbbbb;
 $bg-note-add-hover: #d3d3d3;
-$bg-btn: #3277e3;
-$bg-btn-hover: #4f89e5;
-$bg-btn-danger: #ee4242;
-$bg-btn-danger-hover: #ef5454;
+$bg-btn: #1b58b5;
+$bg-btn-hover: #1952a6;
+$bg-btn-danger: #ff5000;
+$bg-btn-danger-hover: #e34801;
 $bg-btn-warning: #fdbb25;
-$bg-btn-warning-hover: #f3b833;
+$bg-btn-warning-hover: #e3a921;
+$bg-btn-secondary: #1de9b6;
+$bg-btn-secondary-hover: #19c59a;
 
-$bg-note-contols: #a6a6a670;
-$bg-note-contols-hover: rgba(166, 166, 166, 0.45);
+$bg-note-contols: #00000011;
+$bg-note-contols-hover: #4e4abb;
 
 //spacings
 $spacer: 15px;
@@ -45,4 +52,4 @@ $todo-container-height: calc(100vh - $form-elements-height * 3 - $spacer * 10);
 $todo-controls-width: 100px;
 
 //shadows
-$basic-shadow: 5px 5px 10px #bbbaba;
+$basic-shadow: 5px 5px 10px #1a1a1a;
